@@ -2,8 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const MODAL_DURATION_MS = 60000; 
   const MODAL_FADE_MS = 600;       
 
-  // URL do backend (ajuste para produção depois)
-  const backendUrl = 'http://192.168.0.35:5000';
+  // Detecta se está rodando local ou em produção
+  const isLocal = window.location.hostname.includes("localhost") || window.location.hostname.startsWith("192.168.");
+  const backendUrl = isLocal 
+    ? "http://localhost:5000"
+    : window.location.origin; // usa o domínio atual em produção
 
   // ===========================
   // SLIDER DE IMAGENS
