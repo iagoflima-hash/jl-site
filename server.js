@@ -8,18 +8,15 @@ require('dotenv').config();
 const app = express();
 
 // =====================
-// CONFIGURAÇÃO CORS
+// CONFIGURAÇÃO CORS (produção)
 // =====================
 const allowedOrigins = [
-  'https://www.seusite.com',  // produção
-  'http://localhost:5000',    // backend local
-  'http://127.0.0.1:5500',    // frontend local (Live Server)
-  'http://192.168.0.35:5000'  // IP do seu PC na rede local (ajuste se mudar)
+  'https://jl-site.onrender.com', // substitua pelo seu domínio no Render
 ];
 
 app.use(cors({
   origin: function(origin, callback){
-    if(!origin) return callback(null, true);
+    if(!origin) return callback(null, true); // permite requisições sem origem (ex: Postman)
     if(allowedOrigins.indexOf(origin) === -1){
       const msg = 'CORS não permitido!';
       return callback(new Error(msg), false);
@@ -35,12 +32,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // =====================
-// MONGODB
-// =====================
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/jl_contabil', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+// MONGODB (versão atualizada)
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("DB conectado!"))
 .catch((err) => console.log("Erro ao conectar DB:", err));
 
@@ -63,7 +56,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS // App Password do Gmail
+    pass: process.env.EMAIL_PASS
   }
 });
 
@@ -72,7 +65,6 @@ const transporter = nodemailer.createTransport({
 // =====================
 app.post('/api/contato', async (req, res) => {
   try {
-    console.log("Recebido:", req.body); // log para depuração
     const { nome, mensagem, retornoTipo, retornoValor } = req.body;
 
     // Salvar no MongoDB
