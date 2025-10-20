@@ -2,11 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const MODAL_DURATION_MS = 60000; 
   const MODAL_FADE_MS = 600;       
 
-  // Detecta se está rodando local ou em produção
   const isLocal = window.location.hostname.includes("localhost") || window.location.hostname.startsWith("192.168.");
   const backendUrl = isLocal 
     ? "http://localhost:5000"
-    : window.location.origin; // usa o domínio atual em produção
+    : window.location.origin;
 
   // ===========================
   // SLIDER DE IMAGENS
@@ -50,6 +49,17 @@ document.addEventListener("DOMContentLoaded", function () {
       if (endX - startX > 50) showSlide(index - 1);
       else if (startX - endX > 50) showSlide(index + 1);
     });
+
+    // ===========================
+    // CLIQUE EM QUALQUER PARTE DO SLIDER
+    // ===========================
+    slider.style.cursor = 'pointer';
+    slider.addEventListener('click', () => {
+      const contatoSection = document.querySelector('.contato-secao');
+      if (contatoSection) {
+        contatoSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
   }
 
   if (dots) {
@@ -64,19 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   showSlide(0);
-
-  // ===========================
-  // CLIQUE NA SEGUNDA IMAGEM DO SLIDER
-  // ===========================
-  if (slides[1]) {
-    slides[1].style.cursor = 'pointer';
-    slides[1].addEventListener('click', () => {
-        const contatoSection = document.querySelector('.contato-secao');
-        if (contatoSection) {
-            contatoSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-  }
 
   // ===========================
   // FORMULÁRIO COM CHECKBOX
