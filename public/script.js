@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = await response.json();
 
         if (response.ok) {
-          mostrarModalCentral();
+          mostrarModalCentral("Mensagem enviada com sucesso! ✅");
           form.reset();
           campoRetorno.innerHTML = '';
           if (formulario) formulario.style.display = 'none';
@@ -167,36 +167,46 @@ document.addEventListener("DOMContentLoaded", function () {
   // ===========================
   // MODAL CENTRAL
   // ===========================
-  const modalOverlay = document.getElementById('modal-central');
-  const fecharModal = modalOverlay?.querySelector('.fechar-modal');
+  let modalOverlay = document.getElementById('modal-central');
 
-  function mostrarModalCentral() {
-    if (!modalOverlay) return;
-    modalOverlay.style.display = 'flex';
-    modalOverlay.classList.add('show');
-    if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
-    modalOverlay._timer = setTimeout(() => {
-      modalOverlay.classList.remove('show');
-      setTimeout(() => modalOverlay.style.display = 'none', MODAL_FADE_MS);
-    }, MODAL_DURATION_MS);
+  function criarModal() {
+    modalOverlay = document.createElement('div');
+    modalOverlay.id = 'modal-central';
+    modalOverlay.classList.add('modal-overlay');
+    modalOverlay.innerHTML = `
+      <div class="modal-mensagem">
+        <span class="fechar-modal">&times;</span>
+        <div class="icone-confirmacao">✔</div>
+        <h3>Sucesso!</h3>
+        <p id="modal-text"></p>
+      </div>
+    `;
+    document.body.appendChild(modalOverlay);
+
+    const fecharModal = modalOverlay.querySelector('.fechar-modal');
+    fecharModal.addEventListener('click', () => fecharModalCentral());
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) fecharModalCentral(); });
   }
 
-  if (fecharModal) fecharModal.addEventListener('click', () => {
+  function fecharModalCentral() {
+    if (!modalOverlay) return;
     modalOverlay.classList.remove('show');
     setTimeout(() => modalOverlay.style.display = 'none', MODAL_FADE_MS);
     if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
-  });
+  }
 
-  if (modalOverlay) modalOverlay.addEventListener('click', e => {
-    if (e.target === modalOverlay) {
-      modalOverlay.classList.remove('show');
-      setTimeout(() => modalOverlay.style.display = 'none', MODAL_FADE_MS);
-      if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
-    }
-  });
+  function mostrarModalCentral(mensagem = "Mensagem enviada com sucesso!") {
+    if (!modalOverlay) criarModal();
+    const modalText = modalOverlay.querySelector('#modal-text');
+    modalText.textContent = mensagem;
+    modalOverlay.style.display = 'flex';
+    modalOverlay.classList.add('show');
+    if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
+    modalOverlay._timer = setTimeout(() => fecharModalCentral(), MODAL_DURATION_MS);
+  }
 
   // ===========================
-  // MOBILE MENU (FUNCIONA MESMO EM REDIMENSIONAMENTO)
+  // MOBILE MENU
   // ===========================
   const menuToggle = document.querySelector(".hamburger");
   const mobileMenu = document.querySelector(".mobile-menu");
@@ -211,10 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   initMobileMenu();
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth <= 768) initMobileMenu();
-  });
+  window.addEventListener("resize", () => { if (window.innerWidth <= 768) initMobileMenu(); });
 
   // ===========================
   // BANNER DE COOKIES
@@ -223,19 +230,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const aceitarBtn = document.getElementById("aceitar-cookies");
   const recusarBtn = document.getElementById("recusar-cookies");
 
-  function mostrarBanner() {
-    if (!localStorage.getItem("cookiesChoice")) cookieBanner.classList.add("show");
-  }
-
-  aceitarBtn?.addEventListener("click", () => {
-    localStorage.setItem("cookiesChoice", "aceitar");
-    cookieBanner.classList.remove("show");
-  });
-
-  recusarBtn?.addEventListener("click", () => {
-    localStorage.setItem("cookiesChoice", "recusar");
-    cookieBanner.classList.remove("show");
-  });
+  function mostrarBanner() { if (!localStorage.getItem("cookiesChoice")) cookieBanner.classList.add("show"); }
+  aceitarBtn?.addEventListener("click", () => { localStorage.setItem("cookiesChoice", "aceitar"); cookieBanner.classList.remove("show"); });
+  recusarBtn?.addEventListener("click", () => { localStorage.setItem("cookiesChoice", "recusar"); cookieBanner.classList.remove("show"); });
 
   mostrarBanner();
 });
