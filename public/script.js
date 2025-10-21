@@ -3,9 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const MODAL_FADE_MS = 600;       
 
   const isLocal = window.location.hostname.includes("localhost") || window.location.hostname.startsWith("192.168.");
-  const backendUrl = isLocal 
-    ? "http://localhost:5000"
-    : window.location.origin;
+  const backendUrl = isLocal ? "http://localhost:5000" : window.location.origin;
 
   // ===========================
   // SLIDER DE IMAGENS
@@ -19,13 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showSlide(i) {
     if (!slider || slides.length === 0) return;
-    if (i >= slides.length) index = 0;
-    else if (i < 0) index = slides.length - 1;
-    else index = i;
-
+    index = (i + slides.length) % slides.length;
     slider.style.transform = `translateX(${-index * 100}%)`;
     if (dots) dots.forEach((dot, idx) => dot.classList.toggle("active", idx === index));
-
     if (!pausaUsuario) startSlideTimer();
   }
 
@@ -50,15 +44,10 @@ document.addEventListener("DOMContentLoaded", function () {
       else if (startX - endX > 50) showSlide(index + 1);
     });
 
-    // ===========================
-    // CLIQUE EM QUALQUER PARTE DO SLIDER
-    // ===========================
     slider.style.cursor = 'pointer';
     slider.addEventListener('click', () => {
       const contatoSection = document.querySelector('.contato-secao');
-      if (contatoSection) {
-        contatoSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (contatoSection) contatoSection.scrollIntoView({ behavior: 'smooth' });
     });
   }
 
@@ -207,12 +196,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ===========================
-  // MOBILE MENU
+  // MOBILE MENU (FUNCIONA MESMO EM REDIMENSIONAMENTO)
   // ===========================
-  const isMobile = window.innerWidth <= 768;
-  if (isMobile) {
-    const menuToggle = document.querySelector(".hamburger");
-    const mobileMenu = document.querySelector(".mobile-menu");
+  const menuToggle = document.querySelector(".hamburger");
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  function initMobileMenu() {
     if (menuToggle && mobileMenu) {
       menuToggle.addEventListener("click", () => mobileMenu.classList.toggle("active"));
       mobileMenu.querySelectorAll("a").forEach(link => {
@@ -220,4 +209,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
+
+  initMobileMenu();
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 768) initMobileMenu();
+  });
+
+  // ===========================
+  // BANNER DE COOKIES
+  // ===========================
+  const cookieBanner = document.getElementById("cookie-banner");
+  const aceitarBtn = document.getElementById("aceitar-cookies");
+  const recusarBtn = document.getElementById("recusar-cookies");
+
+  function mostrarBanner() {
+    if (!localStorage.getItem("cookiesChoice")) cookieBanner.classList.add("show");
+  }
+
+  aceitarBtn?.addEventListener("click", () => {
+    localStorage.setItem("cookiesChoice", "aceitar");
+    cookieBanner.classList.remove("show");
+  });
+
+  recusarBtn?.addEventListener("click", () => {
+    localStorage.setItem("cookiesChoice", "recusar");
+    cookieBanner.classList.remove("show");
+  });
+
+  mostrarBanner();
 });

@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KC9PSCZZ');</script>
-<!-- End Google Tag Manager -->
+  <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contato - Clique nos contatos abaixo e fale com o especialista</title>
@@ -21,26 +15,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KC9PSCZZ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
   <!-- HEADER -->
   <header class="site-header">
     <nav class="nav-container">
       <div class="logo">
         <img src="./videosefotosdosite/logo_jl_transparente.png" alt="Logo JL Assessoria Contábil">
       </div>
-
-  <!-- MENU DESKTOP -->
-    <ul class="nav-links">
-    <li><a href="#inicio">Home</a></li>
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#contato">Contatos</a></li> <!-- entra nos 3 primeiros -->
-    <li><a href="#sobre-nos">Sobre Nós</a></li>
-    <li><a href="#redes-sociais">Redes Sociais</a></li>
-  </ul>
-
+      <ul class="nav-links">
+        <li><a href="#inicio">Home</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#contato">Contatos</a></li>
+        <li><a href="#sobre-nos">Sobre Nós</a></li>
+        <li><a href="#redes-sociais">Redes Sociais</a></li>
+      </ul>
     </nav>
   </header>
 
@@ -48,7 +35,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section id="inicio" class="banner-inicial">
     <div class="slider-container">
       <div class="slider">
-        <!-- Segunda imagem passa a ser a primeira -->
         <img src="./videosefotosdosite/crop1.JPG" alt="Solicite um orçamento gratuito hoje mesmo!" data-link="#contato">
         <img src="./videosefotosdosite/pessoas-de-negocios-na-africa-apertando-as-maos111111.JPG" alt="Imagem 1">
       </div>
@@ -57,7 +43,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="dot"></span>
       </div>
     </div>
-
     <section class="secao">
       <h2 class="titulo-principal-servicos">
         Cuidar da parte contábil da sua empresa exige 
@@ -67,7 +52,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Estamos aqui para facilitar sua rotina e garantir que sua empresa esteja sempre em dia!
       </h2>
     </section>
-
     <div class="frase-orcamento">
       <p>Solicite um orçamento totalmente gratuito e sem compromisso, ou tire suas dúvidas conosco.</p>
       <a href="#contato" class="btn-orcamento">Fale com um especialista</a>
@@ -114,7 +98,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="info-contato">
         Clique nos contatos abaixo e seja direcionado para falar com o especialista.
       </p>
-
       <div class="contatos-lista">
         <div class="contato-item">
           <img src="./videosefotosdosite/vecteezy_whatsapp-logo-3d-render_12162809.png" alt="WhatsApp">
@@ -138,7 +121,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </label>
       </div>
 
-      <div id="formulario-contato" class="formulario-contato" style="display: none;">
+      <div id="formulario-contato" class="formulario-contato">
         <h3>Digite abaixo algumas informações necessárias para que possamos entrar em contato.</h3>
         <form>
           <label for="nome">Nome e Sobrenome:</label>
@@ -175,17 +158,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <!-- MODAL CENTRAL -->
-  <div id="modal-central" class="modal-overlay" style="display: none;">
-    <div class="modal-mensagem">
-      <div class="icone-confirmacao">✔</div>
-      <h3>Mensagem enviada!</h3>
-      <p>Agradecemos a preferência. Logo estaremos em contato.</p>
-      <span class="fechar-modal">✖</span>
+  <!-- BANNER DE COOKIES -->
+  <div id="cookie-banner" class="cookie-banner">
+    <p>
+      🍪 Gostamos de transparência! Usamos cookies para melhorar sua experiência e oferecer conteúdos mais relevantes.
+      <br>Você pode aceitar para aproveitar tudo ou recusar se preferir.
+    </p>
+    <div class="cookie-btns">
+      <button id="aceitar-cookies">Aceitar</button>
+      <button id="recusar-cookies">Recusar</button>
     </div>
   </div>
 
   <!-- JS -->
   <script src="script.js"></script>
+  <script src="cookies.js"></script>
 </body>
 </html>

@@ -63,7 +63,7 @@ HEADER
 }
 
 /* ===========================
-SLIDER AJUSTADO
+SLIDER
 =========================== */
 .slider-container {
     position: relative;
@@ -133,6 +133,19 @@ FRASE DE ORÇAMENTO
     margin-bottom: 20px;
 }
 
+.frase-orcamento p span {
+    color: #800000;
+    font-weight: 900;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    animation: acender-vermelho 4s infinite alternate;
+}
+
+@keyframes acender-vermelho {
+    0% { color: #800000; opacity: 0.4; text-shadow: 0 0 2px #800000; }
+    50% { color: #ff0000; opacity: 1; text-shadow: 0 0 15px #ff0000; }
+    100% { color: #800000; opacity: 0.6; text-shadow: 0 0 5px #ff0000; }
+}
+
 .btn-orcamento {
     display: inline-block;
     padding: 16px 32px;
@@ -156,7 +169,7 @@ SERVIÇOS
 .titulo-principal-servicos {
     text-align: center;
     font-size: 2.6rem;
-    margin: 40px auto 40px auto;
+    margin: 40px auto;
     max-width: 900px;
     line-height: 1.5;
     color: #fff;
@@ -583,6 +596,74 @@ SCROLLBAR PERSONALIZADA
 ::-webkit-scrollbar-thumb:hover { background: #a00000; }
 * { scrollbar-width: thin; scrollbar-color: #ff0000 #000; }
 
+/* ===========================
+BANNER DE COOKIES
+=========================== */
+.cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background-color: #111;
+    color: #fff;
+    border: 2px solid #ff0000;
+    padding: 20px 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+    z-index: 3000;
+    text-align: center;
+    font-size: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+}
+
+.cookie-banner.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.cookie-banner p {
+    margin: 0;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.cookie-banner p span {
+    color: #ff0000;
+    font-weight: 700;
+}
+
+.cookie-btns {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cookie-btns button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cookie-btns button:hover {
+    background-color: #a00000;
+    transform: scale(1.05);
+}
 
 /* ===========================
 RESPONSIVO MOBILE OTIMIZADO
@@ -596,23 +677,21 @@ RESPONSIVO MOBILE OTIMIZADO
       align-items: center;
       justify-content: flex-start;
       gap: 15px;
-      padding: 8px 12px; /* barra mais fina e harmônica */
+      padding: 8px 12px;
   }
 
-  /* LOGO */
   .logo img {
-      height: 50px; /* menor para ficar proporcional */
+      height: 50px;
       width: auto;
       display: block;
   }
 
-  /* LINKS */
   .nav-links {
       display: flex;
       gap: 18px;
       list-style: none;
       margin-left: 15px;
-      flex: 1; /* ocupa o espaço restante */
+      flex: 1;
   }
 
   .nav-links a {
@@ -627,12 +706,10 @@ RESPONSIVO MOBILE OTIMIZADO
       color: #ff0000;
   }
 
-  /* EXIBIR SOMENTE OS 3 PRIMEIROS LINKS */
   .nav-links li:nth-child(n+4) {
       display: none !important;
   }
 
-  /* SLIDER MOBILE */
   .slider-container {
       max-height: 400px;
   }
@@ -649,7 +726,6 @@ RESPONSIVO MOBILE OTIMIZADO
       height: 16px;
   }
 
-  /* FRASE DE ORÇAMENTO */
   .frase-orcamento p {
       font-size: 1.8rem;
   }
@@ -658,7 +734,6 @@ RESPONSIVO MOBILE OTIMIZADO
       padding: 12px 20px;
   }
 
-  /* SERVIÇOS */
   .titulo-principal-servicos {
       font-size: 1.8rem;
   }
@@ -667,7 +742,6 @@ RESPONSIVO MOBILE OTIMIZADO
       padding: 20px;
   }
 
-  /* SOBRE NÓS */
   #sobre-nos {
       padding: 80px 15px;
   }
@@ -678,7 +752,6 @@ RESPONSIVO MOBILE OTIMIZADO
       font-size: 1rem;
   }
 
-  /* CONTATO */
   .contato-secao {
       padding: 50px 15px;
   }
@@ -693,7 +766,6 @@ RESPONSIVO MOBILE OTIMIZADO
       height: 40px;
   }
 
-  /* FORMULÁRIO */
   .formulario-contato h3 {
       font-size: 1.2rem;
   }
@@ -713,7 +785,6 @@ RESPONSIVO MOBILE OTIMIZADO
       font-size: 14px;
   }
 
-  /* REDES SOCIAIS */
   .redes-sociais h2 {
       font-size: 1.8rem;
   }
@@ -722,4 +793,14 @@ RESPONSIVO MOBILE OTIMIZADO
       height: 50px;
   }
 
+  .cookie-banner {
+      padding: 15px 20px;
+      max-width: 90%;
+      font-size: 0.95rem;
+  }
+
+  .cookie-btns button {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+  }
 }
