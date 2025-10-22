@@ -146,14 +146,16 @@
   </section>
 
   <!-- MODAL CENTRAL (ADICIONADO PARA CONFIRMAÇÃO DO FORMULÁRIO) -->
-  <div id="modal-central" class="modal-overlay">
-    <div class="modal-mensagem">
-      <span class="fechar-modal">&times;</span>
-      <div class="icone-confirmacao">✔</div>
-      <h3>Mensagem enviada com sucesso!</h3>
-      <p>Em breve entraremos em contato com você.</p>
-    </div>
+<div id="modal-central" class="modal-overlay">
+  <div class="modal-mensagem">
+    <span class="fechar-modal">&times;</span>
+    <div class="icone-confirmacao">✔</div>
+    <h3 id="modal-text"></h3> <!-- Mensagem dinâmica via JS -->
+    <p id="modal-subtext"></p> <!-- Subtexto só aparece em caso de sucesso -->
   </div>
+</div>
+
+
 
   <!-- REDES SOCIAIS -->
   <section id="redes-sociais" class="redes-sociais">

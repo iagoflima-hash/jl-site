@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const MODAL_DURATION_MS = 60000; 
-  const MODAL_FADE_MS = 600;       
+  const MODAL_DURATION_MS = 60000; // 60 segundos de exibição
+  const MODAL_FADE_MS = 600;       // mesma duração do fade do CSS
 
   const isLocal = window.location.hostname.includes("localhost") || window.location.hostname.startsWith("192.168.");
   const backendUrl = isLocal ? "http://localhost:5000" : window.location.origin;
@@ -120,6 +120,47 @@ document.addEventListener("DOMContentLoaded", function () {
   const validarTelefone = tel => /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/.test(tel);
 
   // ===========================
+  // MODAL CENTRAL
+  // ===========================
+  const modalOverlay = document.getElementById('modal-central');
+  const fecharModalBtn = modalOverlay?.querySelector('.fechar-modal');
+
+  function fecharModalCentral() {
+    if (!modalOverlay) return;
+    modalOverlay.classList.remove('show');
+    setTimeout(() => { modalOverlay.style.display = 'none'; }, MODAL_FADE_MS);
+  }
+
+  function mostrarModalCentral(mensagem, sucesso = true) {
+    if (!modalOverlay) return;
+    const modalText = modalOverlay.querySelector('h3');
+    const modalSubtext = modalOverlay.querySelector('#modal-subtext');
+    const iconeConfirmacao = modalOverlay.querySelector('.icone-confirmacao');
+
+    modalText.textContent = mensagem;
+
+    if (sucesso) {
+      iconeConfirmacao.textContent = '✔';
+      iconeConfirmacao.style.color = 'green';
+      modalSubtext.textContent = "Em breve entraremos em contato com você.";
+      modalSubtext.style.display = 'block';
+    } else {
+      iconeConfirmacao.textContent = '❌';
+      iconeConfirmacao.style.color = 'red';
+      modalSubtext.textContent = "";
+      modalSubtext.style.display = 'none';
+    }
+
+    modalOverlay.style.display = 'flex';
+    requestAnimationFrame(() => modalOverlay.classList.add('show'));
+    clearTimeout(modalOverlay._timer);
+    modalOverlay._timer = setTimeout(() => fecharModalCentral(), MODAL_DURATION_MS);
+  }
+
+  fecharModalBtn?.addEventListener('click', fecharModalCentral);
+  modalOverlay?.addEventListener('click', e => { if (e.target === modalOverlay) fecharModalCentral(); });
+
+  // ===========================
   // ENVIO FORMULÁRIO
   // ===========================
   const form = document.querySelector('#formulario-contato form');
@@ -150,87 +191,32 @@ document.addEventListener("DOMContentLoaded", function () {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-        const result = await response.json();
 
-        if (response.ok) {
-          mostrarModalCentral("Mensagem enviada com sucesso! ✅");
-          form.reset();
-          campoRetorno.innerHTML = '';
-          if (formulario) formulario.style.display = 'none';
-          if (checkboxForm) checkboxForm.checked = false;
-          botoes.forEach(b => b.classList.remove("ativo"));
-        } else alert(result.message || 'Erro ao enviar.');
-      } catch (err) { console.error(err); alert('Erro ao enviar, tente novamente.'); }
+        if (!response.ok) throw new Error('Erro no envio');
+
+        // Mostra modal de sucesso só se envio realmente funcionou
+        form.reset();
+        campoRetorno.innerHTML = '';
+        if (formulario) formulario.style.display = 'none';
+        if (checkboxForm) checkboxForm.checked = false;
+        botoes.forEach(b => b.classList.remove("ativo"));
+
+        mostrarModalCentral("Mensagem enviada com sucesso!", true);
+      } catch (err) { 
+        console.error(err); 
+        mostrarModalCentral("Erro ao enviar, tente novamente.", false); 
+      }
     });
   }
 
   // ===========================
-  // MODAL CENTRAL
-  // ===========================
-  let modalOverlay = document.getElementById('modal-central');
-
-  function criarModal() {
-    modalOverlay = document.createElement('div');
-    modalOverlay.id = 'modal-central';
-    modalOverlay.classList.add('modal-overlay');
-    modalOverlay.innerHTML = `
-      <div class="modal-mensagem">
-        <span class="fechar-modal">&times;</span>
-        <div class="icone-confirmacao">✔</div>
-        <h3>Sucesso!</h3>
-        <p id="modal-text"></p>
-      </div>
-    `;
-    document.body.appendChild(modalOverlay);
-
-    const fecharModal = modalOverlay.querySelector('.fechar-modal');
-    fecharModal.addEventListener('click', () => fecharModalCentral());
-    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) fecharModalCentral(); });
-  }
-
-  function fecharModalCentral() {
-    if (!modalOverlay) return;
-    modalOverlay.classList.remove('show');
-    setTimeout(() => modalOverlay.style.display = 'none', MODAL_FADE_MS);
-    if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
-  }
-
-  function mostrarModalCentral(mensagem = "Mensagem enviada com sucesso!") {
-    if (!modalOverlay) criarModal();
-    const modalText = modalOverlay.querySelector('#modal-text');
-    modalText.textContent = mensagem;
-    modalOverlay.style.display = 'flex';
-    modalOverlay.classList.add('show');
-    if (modalOverlay._timer) clearTimeout(modalOverlay._timer);
-    modalOverlay._timer = setTimeout(() => fecharModalCentral(), MODAL_DURATION_MS);
-  }
-
-  // ===========================
-  // MOBILE MENU
-  // ===========================
-  const menuToggle = document.querySelector(".hamburger");
-  const mobileMenu = document.querySelector(".mobile-menu");
-
-  function initMobileMenu() {
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener("click", () => mobileMenu.classList.toggle("active"));
-      mobileMenu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => mobileMenu.classList.remove("active"));
-      });
-    }
-  }
-
-  initMobileMenu();
-  window.addEventListener("resize", () => { if (window.innerWidth <= 768) initMobileMenu(); });
-
-  // ===========================
-  // BANNER DE COOKIES
+  // COOKIES
   // ===========================
   const cookieBanner = document.getElementById("cookie-banner");
   const aceitarBtn = document.getElementById("aceitar-cookies");
   const recusarBtn = document.getElementById("recusar-cookies");
 
-  function mostrarBanner() { if (!localStorage.getItem("cookiesChoice")) cookieBanner.classList.add("show"); }
+  function mostrarBanner() { if (!localStorage.getItem("cookiesChoice")) cookieBanner?.classList.add("show"); }
   aceitarBtn?.addEventListener("click", () => { localStorage.setItem("cookiesChoice", "aceitar"); cookieBanner.classList.remove("show"); });
   recusarBtn?.addEventListener("click", () => { localStorage.setItem("cookiesChoice", "recusar"); cookieBanner.classList.remove("show"); });
 
