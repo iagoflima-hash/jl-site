@@ -26,6 +26,22 @@ app.use(cors({
 }));
 
 // =====================
+// 🔒 POLÍTICA DE SEGURANÇA DE CONTEÚDO (CSP)
+// =====================
+// Este bloco corrige o erro do Google Tag Manager / Analytics / Meta Pixel
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; " +
+    "script-src 'self' https://connect.facebook.net https://www.googletagmanager.com https://www.google-analytics.com; " +
+    "img-src 'self' data: https://www.facebook.com https://www.google.com https://www.google-analytics.com; " +
+    "connect-src 'self' https://www.facebook.com https://www.google-analytics.com https://www.googletagmanager.com; " +
+    "frame-src 'self' https://www.facebook.com;"
+  );
+  next();
+});
+
+// =====================
 // MIDDLEWARES
 // =====================
 app.use(express.json());
@@ -33,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // =====================
 // MONGODB (versão atualizada)
+// =====================
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("DB conectado!"))
 .catch((err) => console.log("Erro ao conectar DB:", err));
