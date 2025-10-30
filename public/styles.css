@@ -539,7 +539,7 @@ MODAL CENTRAL
 }
 
 /* ===========================
-REDES SOCIAIS - FUNDO BRANCO
+REDES SOCIAIS
 =========================== */
 .redes-sociais {
     padding: 80px 20px;
@@ -666,163 +666,50 @@ BANNER DE COOKIES
 }
 
 /* ===========================
-RESPONSIVO MOBILE OTIMIZADO
+RESPONSIVO MOBILE
 =========================== */
 @media (max-width: 768px) {
+  .nav-container { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 15px; padding: 8px 12px; }
+  .logo img { height: 50px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 18px; list-style: none; margin-left: 15px; flex: 1; }
+  .nav-links a { color: black; font-size: 0.95rem; }
+  .nav-links li:nth-child(n+4) { display: none !important; }
 
-  .nav-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 15px;
-      padding: 8px 12px;
-  }
+  .slider-container { max-height: 400px; }
+  .slider img { aspect-ratio: 1200 / 485; object-position: center center; }
+  .slider-dots { bottom: 10px; gap: 10px; }
+  .dot { width: 16px; height: 16px; }
 
-  .logo img {
-      height: 50px;
-      width: auto;
-      display: block;
-  }
+  .frase-orcamento p { font-size: 1.8rem; }
+  .btn-orcamento { font-size: 1rem; padding: 12px 20px; }
 
-  .nav-links {
-      display: flex;
-      gap: 18px;
-      list-style: none;
-      margin-left: 15px;
-      flex: 1;
-  }
+  .titulo-principal-servicos { font-size: 1.8rem; }
+  .secao { margin: 50px auto; padding: 20px; }
 
-  .nav-links a {
-      color: black;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-  }
+  #sobre-nos { padding: 80px 15px; }
+  .sobre-nos-conteudo h2 { font-size: 2rem; }
+  .sobre-nos-conteudo p { font-size: 1rem; }
 
-  .nav-links a:hover {
-      color: #ff0000;
-  }
+  .contato-secao { padding: 50px 15px; }
+  .contatos-lista { gap: 20px; }
+  .contato-item { font-size: 1rem; }
+  .contato-item img { width: 40px; height: 40px; }
 
-  .nav-links li:nth-child(n+4) {
-      display: none !important;
-  }
+  .formulario-contato h3 { font-size: 1.2rem; }
+  .formulario-contato input, .formulario-contato textarea { font-size: 14px; }
+  .retorno-btn { font-size: 14px; padding: 8px 12px; }
+  .btn-enviar { font-size: 14px; padding: 10px 15px; }
+  #campo-retorno input { font-size: 14px; }
 
-  .slider-container {
-      max-height: 400px;
-  }
-  .slider img {
-      aspect-ratio: 1200 / 485;
-      object-position: center center;
-  }
-  .slider-dots {
-      bottom: 10px;
-      gap: 10px;
-  }
-  .dot {
-      width: 16px;
-      height: 16px;
-  }
+  .redes-sociais h2 { font-size: 1.8rem; }
+  .icones-redes img { width: 50px; height: 50px; }
 
-  .frase-orcamento p {
-      font-size: 1.8rem;
-  }
-  .btn-orcamento {
-      font-size: 1rem;
-      padding: 12px 20px;
-  }
+  .cookie-banner { padding: 15px 20px; max-width: 90%; font-size: 0.95rem; }
+  .cookie-btns button { padding: 8px 15px; font-size: 0.9rem; }
 
-  .titulo-principal-servicos {
-      font-size: 1.8rem;
-  }
-  .secao {
-      margin: 50px auto;
-      padding: 20px;
-  }
-
-  #sobre-nos {
-      padding: 80px 15px;
-  }
-  .sobre-nos-conteudo h2 {
-      font-size: 2rem;
-  }
-  .sobre-nos-conteudo p {
-      font-size: 1rem;
-  }
-
-  .contato-secao {
-      padding: 50px 15px;
-  }
-  .contatos-lista {
-      gap: 20px;
-  }
-  .contato-item {
-      font-size: 1rem;
-  }
-  .contato-item img {
-      width: 40px;
-      height: 40px;
-  }
-
-  .formulario-contato h3 {
-      font-size: 1.2rem;
-  }
-  .formulario-contato input,
-  .formulario-contato textarea {
-      font-size: 14px;
-  }
-  .retorno-btn {
-      font-size: 14px;
-      padding: 8px 12px;
-  }
-  .btn-enviar {
-      font-size: 14px;
-      padding: 10px 15px;
-  }
-  #campo-retorno input {
-      font-size: 14px;
-  }
-
-  .redes-sociais h2 {
-      font-size: 1.8rem;
-  }
-  .icones-redes img {
-      width: 50px;
-      height: 50px;
-  }
-
-  .cookie-banner {
-      padding: 15px 20px;
-      max-width: 90%;
-      font-size: 0.95rem;
-  }
-
-  .cookie-btns button {
-      padding: 8px 15px;
-      font-size: 0.9rem;
-  }
-
-  .modal-mensagem {
-      padding: 30px 20px;
-  }
-
-  .modal-mensagem h3 {
-      font-size: 1.5rem;
-  }
-
-  .modal-mensagem p {
-      font-size: 1rem;
-  }
-
-  .modal-mensagem .icone-confirmacao {
-      font-size: 2rem;
-      margin-bottom: 10px;
-  }
-
-  .modal-mensagem .fechar-modal {
-      font-size: 1.2rem;
-      top: 8px;
-      right: 10px;
-  }
+  .modal-mensagem { padding: 30px 20px; }
+  .modal-mensagem h3 { font-size: 1.5rem; }
+  .modal-mensagem p { font-size: 1rem; }
+  .modal-mensagem .icone-confirmacao { font-size: 2rem; margin-bottom: 10px; }
+  .modal-mensagem .fechar-modal { font-size: 1.2rem; top: 8px; right: 10px; }
 }

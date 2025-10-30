@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
   modalOverlay?.addEventListener('click', e => { if (e.target === modalOverlay) fecharModalCentral(); });
 
   // ===========================
-  // ENVIO FORMULÁRIO
+  // ENVIO FORMULÁRIO COM reCAPTCHA v3
   // ===========================
   const form = document.querySelector('#formulario-contato form');
 
@@ -186,22 +186,28 @@ document.addEventListener("DOMContentLoaded", function () {
       if ((data.retornoTipo === "telefone" || data.retornoTipo === "whatsapp") && !validarTelefone(data.retornoValor)) { alert("Por favor, digite um telefone válido (com DDD)."); return; }
 
       try {
-        const response = await fetch(`${backendUrl}/api/contato`, { 
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+        // ✅ reCAPTCHA
+        await grecaptcha.ready(async function() {
+          const token = await grecaptcha.execute('6LcMrPsrAAAAAFhWYtlCAQ1QxDyYBtTUYej6QBzs', {action: 'submit'});
+          data.token = token;
+
+          const response = await fetch(`${backendUrl}/api/contato`, { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!response.ok) throw new Error('Erro no envio');
+
+          // Mostra modal de sucesso
+          form.reset();
+          campoRetorno.innerHTML = '';
+          if (formulario) formulario.style.display = 'none';
+          if (checkboxForm) checkboxForm.checked = false;
+          botoes.forEach(b => b.classList.remove("ativo"));
+
+          mostrarModalCentral("Mensagem enviada com sucesso!", true);
         });
-
-        if (!response.ok) throw new Error('Erro no envio');
-
-        // Mostra modal de sucesso só se envio realmente funcionou
-        form.reset();
-        campoRetorno.innerHTML = '';
-        if (formulario) formulario.style.display = 'none';
-        if (checkboxForm) checkboxForm.checked = false;
-        botoes.forEach(b => b.classList.remove("ativo"));
-
-        mostrarModalCentral("Mensagem enviada com sucesso!", true);
       } catch (err) { 
         console.error(err); 
         mostrarModalCentral("Erro ao enviar, tente novamente.", false); 
