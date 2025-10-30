@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if ((data.retornoTipo === "telefone" || data.retornoTipo === "whatsapp") && !validarTelefone(data.retornoValor)) { alert("Por favor, digite um telefone válido (com DDD)."); return; }
 
       try {
-        // ✅ reCAPTCHA
+        // ✅ reCAPTCHA v3
         await grecaptcha.ready(async function() {
           const token = await grecaptcha.execute('6LcMrPsrAAAAAFhWYtlCAQ1QxDyYBtTUYej6QBzs', {action: 'submit'});
           data.token = token;
